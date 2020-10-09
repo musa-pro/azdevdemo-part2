@@ -29,10 +29,15 @@ steps:
       Contents: "**"
       TargetFolder: $(build.artifactstagingdirectory)
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Artifact
+  # Create Archive : zip file
+  - task: ArchiveFiles@2
+    displayName: "Archive $(build.artifactstagingdirectory)/target/azure-functions/$(functionAppMvnTargetFolder)"
     inputs:
-      PathtoPublish: $(build.artifactstagingdirectory)
+      rootFolderOrFile: "$(build.artifactstagingdirectory)/target/azure-functions/$(functionAppMvnTargetFolder)"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      replaceExistingArchive: true
 
   - task: AzureFunctionApp@1
     displayName: Azure Function App deploy
@@ -41,3 +46,8 @@ steps:
       appType: functionApp
       appName: $(appName)
       package: $(build.artifactstagingdirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
