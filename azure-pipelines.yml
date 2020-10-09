@@ -29,16 +29,6 @@ steps:
       Contents: "**"
       TargetFolder: $(build.artifactstagingdirectory)
 
-  # Create Archive : zip file
-  - task: ArchiveFiles@2
-    displayName: Archive Files
-    inputs:
-      rootFolderOrFile: "$(build.artifactstagingdirectory)/$(appName)"
-      includeRootFolder: false
-      archiveType: "zip"
-      archiveFile: "$(build.artifactstagingdirectory)/$(appName).zip"
-      replaceExistingArchive: true
-
   - task: AzureFunctionApp@1
     displayName: Azure Function App deploy
     inputs:
