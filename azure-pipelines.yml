@@ -29,14 +29,12 @@ steps:
       Contents: "**"
       TargetFolder: $(build.artifactstagingdirectory)
 
-  # Create Archive : zip file
   - task: ArchiveFiles@2
-    displayName: "Archive $(build.artifactstagingdirectory)/target/azure-functions/$(functionAppMvnTargetFolder)"
     inputs:
-      rootFolderOrFile: "$(build.artifactstagingdirectory)/target/azure-functions/$(functionAppMvnTargetFolder)"
+      rootFolderOrFile: '$(Build.BinariesDirectory)'
       includeRootFolder: false
-      archiveType: "zip"
-      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
   - task: AzureFunctionApp@1
