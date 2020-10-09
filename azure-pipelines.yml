@@ -33,10 +33,10 @@ steps:
   - task: ArchiveFiles@2
     displayName: Archive Files
     inputs:
-      rootFolderOrFile: "$(build.artifactstagingdirectory)/$(appName)/"
+      rootFolderOrFile: "$(build.artifactstagingdirectory)/$(appName)"
       includeRootFolder: false
       archiveType: "zip"
-      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      archiveFile: "$(build.artifactstagingdirectory)/$(appName).zip"
       replaceExistingArchive: true
 
   - task: AzureFunctionApp@1
