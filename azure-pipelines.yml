@@ -1,22 +1,43 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+variables:
+  serviceConnectionToAzure: "functions-connection"
+  # the name of your web app here is the same one you used above
+  # when you created the web app using the Azure CLI
+  appName: "pipelinesjavafunction"
 
 trigger:
-- master
+  - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+  - task: Maven@3
+    inputs:
+      mavenPomFile: "pom.xml"
+      mavenOptions: "-Xmx3072m"
+      javaHomeOption: "JDKVersion"
+      jdkVersionOption: "1.8"
+      jdkArchitectureOption: "x64"
+      publishJUnitResults: true
+      testResultsFiles: "**/surefire-reports/TEST-*.xml"
+      goals: "package"
+
+  - task: CopyFiles@2
+    displayName: Copy Files
+    inputs:
+      SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/
+      Contents: "**"
+      TargetFolder: $(build.artifactstagingdirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
+
+  - task: AzureFunctionApp@1
+    displayName: Azure Function App deploy
+    inputs:
+      azureSubscription: $(serviceConnectionToAzure)
+      appType: functionApp
+      appName: $(appName)
+      package: $(build.artifactstagingdirectory)
