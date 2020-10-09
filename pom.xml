@@ -131,11 +131,7 @@
                         <property>
                             <name>FUNCTIONS_WORKER_RUNTIME</name>
                             <value>java</value>
-                        </property>
-                        <property>
-                            <name>DBUName</name>
-                            <value>toma</value>
-                        </property>                        
+                        </property>                      
                     </appSettings>
                 </configuration>
                 <executions>
