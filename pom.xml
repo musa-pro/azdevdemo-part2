@@ -19,7 +19,7 @@
         <functionAppName>pipelinesjavafunction</functionAppName>
         <functionAppRegion>canadacentral</functionAppRegion>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
-        <functionResourceGroup>java-functions-group</functionResourceGroup>
+        <functionResourceGroup>java-functions-group-dev</functionResourceGroup>
     </properties>
 
     <repositories>
