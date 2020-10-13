@@ -41,7 +41,9 @@ steps:
     inputs:
       azureSubscription: $(serviceConnectionToAzure)
       appName: $(appName)
-      appSettings: '[ { "name": "key1", "value": "valueabcd", "slotSetting": false }, { "name": "key2", "value": "valueefgh", "slotSetting": true } ]'
+      appSettings: |
+        [ { "name": "key3", "value": "$(key3)", "slotSetting": false }]
+
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifact
     inputs:
