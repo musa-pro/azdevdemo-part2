@@ -37,6 +37,11 @@ steps:
       appName: $(appName)
       package: $(build.artifactstagingdirectory)
 
+  - task: AzureAppServiceSettings@1
+    inputs:
+      azureSubscription: $(serviceConnectionToAzure)
+      appName: $(appName)
+      appSettings: '[ { "name": "key1", "value": "valueabcd", "slotSetting": false }, { "name": "key2", "value": "valueefgh", "slotSetting": true } ]'
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifact
     inputs:
