@@ -34,7 +34,7 @@ steps:
     inputs:
       azureSubscription: $(serviceConnectionToAzure)
       appType: functionApp
-      appName:" $(appName)-func"
+      appName: "$(appName)-func"
       package: $(build.artifactstagingdirectory)
 
   - task: PublishBuildArtifacts@1
