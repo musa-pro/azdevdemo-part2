@@ -29,7 +29,15 @@ steps:
       Contents: "**"
       TargetFolder: $(build.artifactstagingdirectory)
 
- 
+  - task: ArchiveFiles@2
+    displayName: Archive Files
+    inputs:
+      rootFolderOrFile: "$(system.defaultworkingdirectory)/target/azure-functions/$(appName)/"
+      includeRootFolder: true 
+      archiveType: 'zip' # Options: zip, 7z, tar, wim
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip" 
+      replaceExistingArchive: true 
+    
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifact
     inputs:
