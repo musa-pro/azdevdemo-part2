@@ -29,21 +29,7 @@ steps:
       Contents: "**"
       TargetFolder: $(build.artifactstagingdirectory)
 
-  - task: AzureFunctionApp@1
-    displayName: Azure Function App deploy
-    inputs:
-      azureSubscription: $(serviceConnectionToAzure)
-      appType: functionApp
-      appName: $(appName)
-      package: $(build.artifactstagingdirectory)
-
-  - task: AzureAppServiceSettings@1
-    inputs:
-      azureSubscription: $(serviceConnectionToAzure)
-      appName: $(appName)
-      appSettings: |
-        [ { "name": "key3", "value": "$(key3)", "slotSetting": false }]
-
+ 
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifact
     inputs:
